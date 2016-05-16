@@ -87,6 +87,34 @@ class LeagueController extends Controller
 
         $courses = Course::join('matches', 'courses.id', '=', 'matches.course_id')->select('courses.id', 'courses.name', 'courses.image', 'courses.city', 'courses.state')->where('league_id', '=', $league->id)->distinct()->get()->sortBy('name');
 
-    	return view('league.show', compact('league', 'standings', 'matches', 'courses'));
+        $league->mostCourse = Course::join('matches', 'courses.id', '=', 'matches.course_id')->select('courses.name', DB::raw('COUNT(courses.id) as numPlayed'))->where('league_id', $league->id)->groupBy('courses.id', 'courses.name')->get()->sortByDesc('numPlayed')->first();
+
+        $lastMatch = $matches->first();
+
+        $lastMatchScores = $lastMatch
+            ->matchScores()
+            ->join('holes', 'match_scores.hole_id', '=', 'holes.id')
+            ->join('players', 'match_scores.player_id', '=', 'players.id')
+            ->select('players.id', 'match_scores.score', 'holes.par', 'holes.yards')
+            ->get();
+
+        $par = 0;
+        foreach($lastMatchScores as $lastMatchScore)
+        {
+            if ($lastMatchScore->score <= $lastMatchScore->par)
+            {
+                $par++;
+            }
+        }
+
+        $lastOutting = array('winner' => $lastMatch->winner->firstName . " " . $lastMatch->winner->lastName,
+                             'course' => $lastMatch->course->name,
+                             'city' => $lastMatch->course->city . ", " . $lastMatch->course->state,
+                             'players' => $lastMatchScores->groupBy('id')->count(),
+                             'yards' => round($lastMatchScores->where('id', $lastMatchScores->first()->id)->sum('yards')*1.1),
+                             'swings' => $lastMatchScores->sum('score'),
+                             'pars' => $par);
+
+    	return view('league.show', compact('league', 'standings', 'matches', 'courses', 'lastOutting'));
     }
 }

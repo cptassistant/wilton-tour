@@ -15,4 +15,9 @@ class Player extends Model
     {
     	return $this->belongsToMany('App\MatchWinners', 'match_winners');
     }
+
+    public function matchScores()
+    {
+    	return $this->belongsToMany('App\MatchScores', 'match_scores');
+    }
 }

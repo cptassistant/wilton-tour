@@ -66,74 +66,105 @@
     </div>
 
     <div class="row">
-    	<div class="panel panel-default panel-borderless">
 		<?php $a = 1; ?>
 
 @foreach($standings as $player)
 
 @if($a<=3) <!-- 3 -->
-			<div class="col-md-4">
-				<div class="panel-body standings-holder">
-					<figure class="standings-photo">
-						<img src="{{ $player->image }}" alt="standings image" style="display:block;" />
-						<div class="score-total">
-							<span>{{ $player->total_score }}</span>
+		<div class="col-md-4">
+			<div class="panel-body standings-holder">
+				<figure class="standings-photo">
+					<img src="{{ $player->image }}" alt="standings image" style="display:block;" />
+					<div class="score-total">
+						<span>{{ $player->total_score }}</span>
+					</div>
+					<figcaption class="standings-description">
+						<h3 class="standings-name">{{ $player->firstName }} {{ $player->lastName }}</h3>
+						<div class="standings-points">
+							<span>Match: {{ $player->match_score }}</span>
+							<span>Achievement: {{ $player->achievement_score }}</span>
 						</div>
-						<figcaption class="standings-description">
-							<h3 class="standings-name">{{ $player->firstName }} {{ $player->lastName }}</h3>
-							<div class="standings-points">
-								<span>Match: {{ $player->match_score }}</span>
-								<span>Achievement: {{ $player->achievement_score }}</span>
-							</div>
-						</figcaption>
-					</figure>
-				</div>
+					</figcaption>
+				</figure>
 			</div>
+		</div>
 
 @else
 
 	@if($a==4) <!-- 4 -->
-	        <div class="col-md-12">
-	            <div class="panel-body">
-	            	<div class="panel-text">
-	            		<div class="table-responsive">
-	                		<table class="table table-hover league-table">
-	                			<thead>
-	                				<th>#</th>
-	                				<th>Name</th>
-	                				<th>Score <span></span></th>
-	                				<!-- <th>Outtings</th> -->
-	                			</thead>
-    @endif
+	</div>
+	<div class="row">
+        <div class="col-md-12">
+            <div class="panel-body">
+            	<div class="panel-text">
+            		<div class="table-responsive">
+                		<table class="table table-hover league-table">
+                			<thead>
+                				<th>#</th>
+                				<th>Name</th>
+                				<th>Score <span></span></th>
+                				<!-- <th>Outtings</th> -->
+                			</thead>
+@endif
 
-	                			<tr class="league-row-{{ $a }}">
-		                    		<td style="font-weight:bold;">{{ $a }}</td>
-		                    		<td><img src="{{ $player->image }}" />{{ $player->firstName }} {{ $player->lastName }}</td>
-		                    		<td>{{ $player->total_score }} <span> - {{ $player->match_score }} Match / {{ $player->achievement_score }} Achievement</span></td>
-		                    		<!-- <td> Number of Matches</td> -->
-	                	        </tr>
+                			<tr class="league-row-{{ $a }}">
+	                    		<td style="font-weight:bold;">{{ $a }}</td>
+	                    		<td><img src="{{ $player->image }}" />{{ $player->firstName }} {{ $player->lastName }}</td>
+	                    		<td>{{ $player->total_score }} <span> - {{ $player->match_score }} Match / {{ $player->achievement_score }} Achievement</span></td>
+	                    		<!-- <td> Number of Matches</td> -->
+                	        </tr>
 
 @endif
 
-    <?php $a++; ?>
+<?php $a++; ?>
 @endforeach
 
 
 
 @if($a>4) <!-- 4 -->
-		    				</table>
-		    			</div>
-		    		</div>
-				</div>
+	    				</table>
+	    			</div>
+	    		</div>
 			</div>
-@endif
 		</div>
+@endif
 	</div>
 </div>
 
 @if($league->disable_last_outting == false)
-<div class="container">
-	
+<div id="golf1" data-type="background" data-speed="10" class="parallax">
+	<div class="overlay">
+		<div class="container">
+			<div class="row">
+				<div class="hero-holder col-md-12">
+					<h3>Last Outting</h3>
+					<p class="leader">WOW! <span>{{ $lastOutting['winner'] }}</span> managed to win the last game at <span>{{ $lastOutting['course'] }}</span> in {{ $lastOutting['city'] }}! Here's what else went down...</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="fact-holder col-md-3">
+					<div class="facts">
+						<span>{{ $lastOutting['players'] }}</span>Players Played
+					</div>
+				</div>
+				<div class="fact-holder col-md-3">
+					<div class="facts">
+						<span>{{ $lastOutting['yards'] }}</span>Yards Walked
+					</div>
+				</div>
+				<div class="fact-holder col-md-3">
+					<div class="facts">
+						<span>{{ $lastOutting['swings'] }}</span>Swings Taken
+					</div>
+				</div>
+				<div class="fact-holder col-md-3">
+					<div class="facts">
+						<span>{{ $lastOutting['pars'] }}</span>Par or Better
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 @endif
 
@@ -178,56 +209,93 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="col-md-12">
 	</div>
 </div>
 
 @if($league->is_achievements == true)
+<div class="breaker">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<div id="Achievements" class="panel panel-default panel-borderless">
-					<div class="panel-heading">
-						<h2 class="panel-title"><span>The Achievements</span></h2>
-					</div>
+    	<div class="col-md-12">
+        	<div><span>Winning games is not the only way to score in </span> {{ $league->name }}</div>
+        </div>
+    </div>
+</div>  
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div id="Achievements" class="panel panel-default panel-borderless">
+				<div class="panel-heading">
+					<h2 class="panel-title"><span>The Achievements</span></h2>
+				</div>
 
-					<div class="panel-body">
-						<div class="panel-text">
-							{{ $league->achievements_blurb }}
-						</div>
+				<div class="panel-body">
+					<div class="panel-text">
+						{{ $league->achievements_blurb }}
 					</div>
 				</div>
 			</div>
 		</div>
-			<?php $a = 1; ?>
-			@foreach($league->achievements as $achievement)
-				@if($achievement->value > 0)
-					@if($a%2 != 0)
-					<div class="row">
-					@endif
-					<div class="col-md-6 achievement-col-{{ $a%2 }}">
-						<div class="panel panel-default panel-borderless">
-							<div class="achievement-holder">
-								<img src="{{ $achievement->icon }}" alt="achievement icon" />
-								<div class="achievement-description">
-									<h4>{{ $achievement->name }}</h4>
-									<span>{{ $achievement->description }}</span>
-								</div>
+	</div>
+		<?php $a = 1; ?>
+		@foreach($league->achievements as $achievement)
+			@if($achievement->value > 0)
+				@if($a%2 != 0)
+				<div class="row">
+				@endif
+				<div class="col-md-6 achievement-col-{{ $a%2 }}">
+					<div class="panel panel-default panel-borderless">
+						<div class="achievement-holder">
+							<img src="{{ $achievement->icon }}" alt="achievement icon" />
+							<div class="achievement-description">
+								<h4>{{ $achievement->name }}</h4>
+								<span>{{ $achievement->description }}</span>
 							</div>
 						</div>
 					</div>
-					@if($a%2 == 0)
-					</div>
-					@endif
-					<?php $a++; ?>
+				</div>
+				@if($a%2 == 0)
+				</div>
 				@endif
-			@endforeach
+				<?php $a++; ?>
+			@endif
+		@endforeach
+	</div>
+</div>
+
+<div id="golf1" data-type="background" data-speed="10" class="parallax">
+	<div class="overlay">
+		<div class="container">
+			<div class="row">
+				<div class="hero-holder col-md-12">
+					<h3>Random Stats</h3>
+					<p class="leader"></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="fact-holder col-md-3">
+					<div class="facts">
+					</div>
+				</div>
+				<div class="fact-holder col-md-3">
+					<div class="facts">
+					</div>
+				</div>
+				<div class="fact-holder col-md-3">
+					<div class="facts">
+					</div>
+				</div>
+				<div class="fact-holder col-md-3">
+					<div class="facts">
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+</div>
 @endif
 
 @if($league->disable_courses == false)
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
@@ -267,6 +335,13 @@
 			@endforeach
 		</div>
 	</div>
+	<div class="breaker">
+	<div class="container">
+    	<div class="col-md-12">
+        	<div><span>Most played course: </span> {{ $league->mostCourse->name }} <span>- {{ $league->mostCourse->numPlayed }}</span></div>
+        </div>
+    </div>
+</div>  
 @endif
 
 @if($league->disable_rules == false)

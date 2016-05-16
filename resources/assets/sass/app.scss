@@ -30,6 +30,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
+.container {
+	margin-bottom:80px;
+}
+
 /* Navigation
 ========================================================================= */
 
@@ -252,6 +256,13 @@ span.league-dates {
 	background:rgba(255,255,255,0.15);
 }
 
+p.leader {
+    font-size: 18px;
+    line-height: 150%;
+    margin-bottom: 20px;
+    color: #AAA;
+}
+
 .panel-borderless {
 	border:none;
 	box-shadow:none;
@@ -295,6 +306,38 @@ h2.panel-title span {
 	color:$yellow;
 }
 
+#golf1 {
+	background:url(../images/golf1.jpg) center center no-repeat fixed;
+	background-size:cover !important;
+	background-position:center center !important;
+	background-attachment:fixed;
+}
+
+
+    .parallax {
+	color:#FFF;
+	text-align:center;
+}
+
+.parallax h3 {
+	margin-top:70px;
+	color:#FFF;
+	background-attachment:scroll;
+	background:url(../images/divider.png) repeat-x top center;
+	padding-top:20px;
+	display:inline-block;
+	font-size:30px;
+}
+
+.parallax .leader {
+	color:#FFF;
+	margin-bottom:50px;
+}
+
+.parallax span {
+	color:#F1C40F;
+}
+
 /* League Formatting
 ========================================================================= */
 
@@ -321,7 +364,7 @@ h2.panel-title span {
 
 .standings-holder, .golfer-holder, .course-holder {
 	padding:0;
-	margin:0 auto 20px auto;
+	margin:0 auto;
 	position:relative;
 	z-index:1;
 	overflow:hidden;
@@ -451,7 +494,7 @@ h2.panel-title span {
 }
 
 .achievement-holder {
-	margin-bottom:40px;
+	margin-bottom:30px;
 	text-align:right;
 }
 
@@ -485,4 +528,40 @@ h2.panel-title span {
 .rule-body .rule-text{
 	text-align:left;
 	margin-bottom:35px;
+}
+
+.facts {
+	background:rgba(255,255,255,0.2);
+	padding:20px;
+	text-transform:uppercase;
+	font-size:11px;
+}
+
+.facts span {
+	display:block;
+	font-family: 'Roboto', sans-serif;
+	font-size:50px;
+	line-height:50px;
+	font-weight:bold;
+	margin-bottom:0;
+}
+
+.breaker {
+	background:#F1C40F;
+	color:#FFF;
+	font-size:16px;
+	line-height:20px;
+	font-weight:bold;
+	text-align:center;
+	text-transform:uppercase;
+}
+
+.breaker .container {
+	padding-top:60px;
+	padding-bottom:60px;
+	margin-bottom:0;
+}
+
+.breaker span {
+	opacity:0.6;
 }
