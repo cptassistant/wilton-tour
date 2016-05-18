@@ -13,11 +13,6 @@ class Player extends Model
 
     public function matchWinners()
     {
-    	return $this->belongsToMany('App\MatchWinners', 'match_winners');
-    }
-
-    public function matchScores()
-    {
-    	return $this->belongsToMany('App\MatchScores', 'match_scores');
+        return $this->hasMany('App\MatchWinner');
     }
 }

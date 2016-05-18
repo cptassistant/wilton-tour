@@ -197,11 +197,11 @@
 						<tr>
 							<td>{{ date('M d, Y', strtotime($match->date)) }}</td>
 							<td>{{ $match->course->name }}</td>
-							<td>{{ $match->holesPlayed }}</td>
+							<td>{{ $match->holes_played }}</td>
 							<td>
-								@if ($match->winner)
-									{{ $match->winner->firstName }} {{ $match->winner->lastName }}
-								@endif
+							@if($match->winner)
+								{{ $match->winner }}
+							@endif
 							</td>
 						</tr>
 						@endforeach
@@ -268,24 +268,28 @@
 			<div class="row">
 				<div class="hero-holder col-md-12">
 					<h3>Random Stats</h3>
-					<p class="leader"></p>
+					<p class="leader">Some good... some bad... all <span>{{ $league->name }}</span></p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="fact-holder col-md-3">
 					<div class="facts">
+						Most Wins<span>{{ $randomStats['mostWinsNum'] }}</span>{{ $randomStats['mostWinsPlayer'] }}
 					</div>
 				</div>
 				<div class="fact-holder col-md-3">
 					<div class="facts">
+						Most Swings<span>{{ $randomStats['mostSwingsNum'] }}</span>{{ $randomStats['mostSwingsPlayer'] }}
 					</div>
 				</div>
 				<div class="fact-holder col-md-3">
 					<div class="facts">
+						Best 9 Holes<span>{{ $randomStats['best9Score'] }}</span>{{ $randomStats['best9Player'] }}
 					</div>
 				</div>
 				<div class="fact-holder col-md-3">
 					<div class="facts">
+						{{ $randomStats['best18Text'] }}<span>{{ $randomStats['best18Score'] }}</span>{{ $randomStats['best18Player'] }}
 					</div>
 				</div>
 			</div>

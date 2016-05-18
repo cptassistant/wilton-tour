@@ -6,19 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model
 {
-    public function matchWinners ()
+    public function matchScores()
     {
-    	return $this->hasMany('App\MatchWinner', 'match_id');
-    }
-
-    public function matchAchievements ()
-    {
-    	return $this->hasMany('App\MatchAchievement', 'match_id');
-    }
-
-    public function league ()
-    {
-    	return $this->belongsTo('App\League');
+        return $this->hasMany('App\MatchScore');
     }
 
     public function course()
@@ -26,8 +16,13 @@ class Match extends Model
         return $this->belongsTo('App\Course');
     }
 
-    public function matchScores()
+    public function matchStats()
     {
-        return $this->hasMany('App\MatchScore', 'match_id');
+        return $this->hasMany('App\MatchStat');
+    }
+
+    public function matchWinners()
+    {
+        return $this->hasMany('App\MatchWinner');
     }
 }
