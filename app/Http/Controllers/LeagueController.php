@@ -66,7 +66,7 @@ class LeagueController extends Controller
         {
             if ($match->matchWinners->count() > 0)
             {
-                $match->winner = $match->matchWinners->first()->player->firstName . " " . $match->matchWinners->first()->player->lastName;
+                $match->winner = $match->matchWinners()->orderBy('value', 'desc')->first()->player->firstName . " " . $match->matchWinners()->orderBy('value', 'desc')->first()->player->lastName;
             }
             else
             {
@@ -94,7 +94,11 @@ class LeagueController extends Controller
             first();
 
         // Geet the last played match and calculate random stats
-        $lastMatch = $matches->first();
+        $lastMatch = $matches->
+            where('status', 'completed')->
+            first();
+
+        $lastWinner = MatchStat::where('match_id', $lastMatch->id)->orderBy('match_points_earned', 'desc')->first();
 
         $lastMatchScores = $lastMatch
             ->matchScores()
@@ -112,7 +116,7 @@ class LeagueController extends Controller
             }
         }
 
-        $lastOutting = array('winner' => $lastMatch->matchWinners->first()->player->firstName . " " . $lastMatch->matchWinners->first()->player->lastName,
+        $lastOutting = array('winner' => $lastWinner->firstName . " " . $lastWinner->lastName,
                              'course' => $lastMatch->course->name,
                              'city' => $lastMatch->course->city . ", " . $lastMatch->course->state,
                              'players' => $lastMatch->number_players,

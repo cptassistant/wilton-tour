@@ -29,3 +29,17 @@ Route::get('profile/{id}', 'ProfileController@show');
 Route::get('league', 'LeagueController@index');
 Route::get('league/{league}', 'LeagueController@show');
 
+Route::get('league/{league}/match/create', 'MatchController@leagueCreate');
+
+// Match Routes
+Route::get('/match/{match}/addscores', 'MatchController@addScores');
+Route::get('/match/{match}/finalize', 'MatchController@finalize');
+Route::post('match/addscores', ['as' => 'match.addscores', 'uses' => 'MatchController@postScores' ]);
+Route::post('match/addachievement', ['as' => 'match.addachievement', 'uses' => 'MatchController@postAchievement' ]);
+Route::post('match/assignpoints', ['as' => 'match.assignpoints', 'uses' => 'MatchController@assignPoints' ]);
+
+	//ajax requests
+	Route::get('/match/gettees/{course}', 'MatchController@getTees');
+	Route::get('/match/getholes/{course}', 'MatchController@getHoles');
+
+Route::resource('match', 'MatchController');

@@ -5820,7 +5820,6 @@ img.toback {
 
 #sub-nav {
   height: 60px;
-  overflow: hidden;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   width: 100%;
   z-index: 1000;
@@ -5854,7 +5853,8 @@ img.toback {
 
 .slide-in {
   max-width: 0;
-  transition: max-width .5s ease-in-out; }
+  transition: max-width .5s ease-in-out;
+  overflow: hidden; }
 
 .isStuck .slide-in {
   max-width: 400px;
@@ -5917,6 +5917,10 @@ span.league-dates {
   background: url(../images/bg.jpg) 50% 0 no-repeat fixed;
   height: 460px !important; }
 
+.hero-small {
+  background: url(../images/bg.jpg) 50% 0 no-repeat fixed;
+  height: 260px !important; }
+
 .hero-top {
   border-bottom: 3px solid white;
   border-bottom: 3px solid rgba(255, 255, 255, 0.15);
@@ -5940,6 +5944,9 @@ span.league-dates {
   text-transform: uppercase;
   font-weight: bold;
   margin-top: 0; }
+
+.hero-small .hero-header h1 {
+  font-size: 45px !important; }
 
 .hero-header span {
   color: #F1C40F; }
@@ -6002,6 +6009,9 @@ h2.panel-title span {
 
 .panel-text span {
   color: #F1C40F; }
+
+.panel-form {
+  text-align: left; }
 
 #golf1 {
   background: url(../images/golf1.jpg) center center no-repeat fixed;
@@ -6146,7 +6156,7 @@ h2.panel-title span {
   padding-bottom: 40px; }
 
 .achievement-holder {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   text-align: right; }
 
 .achievement-col-0 .achievement-holder {
@@ -6205,5 +6215,28 @@ h2.panel-title span {
 
 .breaker span {
   opacity: 0.6; }
+
+td a {
+  display: block; }
+
+td a:hover {
+  text-decoration: none; }
+
+.score-table, .score-table thead th {
+  text-align: center; }
+
+.score-table .holes-row {
+  background: #F1C40F;
+  color: #FFF; }
+
+.score-table td {
+  border: 1px solid #ddd !important;
+  vertical-align: middle !important; }
+
+.score-table th {
+  border: 2px solid #ddd !important; }
+
+.text-left {
+  text-align: left !important; }
 
 /*# sourceMappingURL=app.css.map */

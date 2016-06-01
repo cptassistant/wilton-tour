@@ -6,6 +6,120 @@ jQuery(function($) {
   			$('.stuckMenu').stickUp();
   		}
 
+  	// AJAX requests for creating a new match
+	$('#course_id').on('change', function(e){
+	    console.log(e);
+
+	    var course_id = e.target.value;
+
+	    //ajax
+	    $.get('/match/gettees/' + course_id, function(data){
+	    	//success data
+	    	$('#scorecard').empty();
+	    	$.each(data, function(index, scorecard) {
+	    		$('#scorecard').append('<option value="'+scorecard.id+'">'+scorecard.teeColor+'</option>');
+	    	});
+	    });
+
+	    $.get('/match/getholes/' + course_id, function(data){
+	    	//success data
+	    	$("#holes-list").empty();
+	    	var i = 1;
+	    	var holes = parseInt(data);
+
+	    	while (i <= holes) {
+	    		$('#holes-list').append('<div class="holes-list-checkbox checkbox"><label><input type="checkbox" name="course_holes[]" value="'+i+'" checked/>'+i+'</label></div>');
+	    		i++;
+	    	}
+	    });
+	});
+
+	$('#btn-match').click(function(){		
+        $('#frmAssignPoints').trigger("reset");
+        $('#mpModal').modal('show');
+	});
+
+	$("#btn-match-save").click(function (e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+
+        e.preventDefault(); 
+
+        var formData = {
+            player_id: $('#player_id').val(),
+            value: $('#value').val(),
+            match_id: $('#match_id').val()
+        }
+
+        var type = "POST"; //for creating new resource
+        var my_url = "/match/assignpoints";
+
+        console.log(formData);
+
+        $.ajax({
+
+            type: type,
+            url: my_url,
+            data: formData,
+            dataType: 'json',
+            success: function (data) {
+            	console.log(data);
+                location.reload();
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    });
+
+	//display modal form for adding achievement
+    $('#btn-add').click(function(){
+        $('#btn-save').val("add");
+        $('#frmTasks').trigger("reset");
+        $('#myModal').modal('show');
+    });
+
+    $("#btn-save").click(function (e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+
+        e.preventDefault(); 
+
+        var formData = {
+            player_id: $('#achievement_player_id').val(),
+            achievement_id: $('#achievement_id').val(),
+            match_hole_id: $('#match_hole_id').val(),
+            league_id: $('#league_id').val(),
+            match_id: $('#match_id').val()
+        }
+
+        var type = "POST"; //for creating new resource
+        var my_url = "/match/addachievement";
+
+        console.log(formData);
+
+        $.ajax({
+
+            type: type,
+            url: my_url,
+            data: formData,
+            dataType: 'json',
+            success: function (data) {
+            	console.log(data);
+                location.reload();
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    });
+
 	// Cache the Window object
 	$window = $(window);
                 
@@ -52,7 +166,7 @@ $(document).ready(function(){
 			event.preventDefault();				
 	});
 
-	$('#sub-nav a').click( function(event) { 
+	$('.scroll_link a').click( function(event) { 
 			$('html, body').scrollTo(this.hash, 1000, { easing:'easeInOutExpo' });
 			event.preventDefault();				
 	});

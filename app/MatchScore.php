@@ -15,4 +15,9 @@ class MatchScore extends Model
 	{
 		return $this->belongsTo('App\Player');
 	}
+
+	public function matchHole()
+	{
+		return $this->belongsTo('App\MatchHole');
+	}
 }

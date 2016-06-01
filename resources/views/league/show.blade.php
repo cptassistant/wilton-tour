@@ -31,18 +31,21 @@
 				</div>
 			</a>
 		</li>
-		<li><a href="#Standings">Standings</a></li>
-		<li><a href="#Matches">Match History</a></li>
+		<li class="scroll_link"><a href="#Standings">Standings</a></li>
+		<li class="scroll_link"><a href="#Matches">Match History</a></li>
 		@if ($league->is_achievements == true)
-			<li><a href="#Achievements">Achievements</a></li>
+			<li class="scroll_link"><a href="#Achievements">Achievements</a></li>
 		@endif
 		@if($league->disable_courses == false)
-			<li><a href="#Courses">Courses</a></li>
+			<li class="scroll_link"><a href="#Courses">Courses</a></li>
 		@endif
 		@if($league->disable_rules == false)
-			<li><a href="#Rules">Rules</a></li>
+			<li class="scroll_link"><a href="#Rules">Rules</a></li>
 		@endif
 	</ul>
+	<ul>
+
+	@include('nav.subnav_admin')
 @endsection
 
 
@@ -195,13 +198,14 @@
             			</thead>
 						@foreach($matches as $match)
 						<tr>
-							<td>{{ date('M d, Y', strtotime($match->date)) }}</td>
-							<td>{{ $match->course->name }}</td>
-							<td>{{ $match->holes_played }}</td>
+							<td><a href="/match/{{ $match->id }}">{{ date('M d, Y', strtotime($match->date)) }}</a></td>
+							<td><a href="/match/{{ $match->id }}">{{ $match->course->name }}</a></td>
+							<td><a href="/match/{{ $match->id }}">{{ $match->holes_played }}</a></td>
 							<td>
 							@if($match->winner)
-								{{ $match->winner }}
+								<a href="/match/{{ $match->id }}">{{ $match->winner }}</a>
 							@endif
+							
 							</td>
 						</tr>
 						@endforeach
