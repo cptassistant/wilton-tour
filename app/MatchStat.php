@@ -10,4 +10,9 @@ class MatchStat extends Model
 	{
 		return $this->belongsTo('App\Match');
 	}
+
+	public function player()
+	{
+		return $this->belongsTo('App\Player');
+	}
 }

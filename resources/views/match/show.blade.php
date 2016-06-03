@@ -1,13 +1,21 @@
 @extends('layouts.app')
 
 @section('hero-bg')
-<div id="hero" class="hero-small" data-type="background" data-speed="10">
+<div id="hero" class="hero-half" data-type="background" data-speed="10">
     <div class="overlay">
         <div class="container hero-holder">
             <div class="row hero-wrapper">
                 <div class="col-md-8 col-md-offset-2">
+                    <div class="hero-top">
+                        <span>{{ $league->name }}</span>
+                    </div>
                     <div class="hero-header">
-                        <h1 id="league-title">{{ $league->name }}</h1>
+                        <h1 id="league-title">{{ $match->course->name }}</h1>
+                    </div>
+                    <div class="hero-sub">
+                        
+                            <a href="#Standings">{{ date('M d, Y', strtotime($match->date)) }}</a>
+                        
                     </div>
                 </div>
             </div>
@@ -25,31 +33,92 @@
 @section('content')
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div id="Standings" class="panel panel-default panel-borderless">
-                <div class="panel-heading">
-                    <h2 class="panel-title"><span>{{ $match->course->name }}</span></h2>
-                </div>
-                <div class="panel-body">
-                    <div class="panel-text">
-                        {{ date('M d, Y', strtotime($match->date)) }}
+    @if((Auth::id() == $league->ownerID) && $match->status != "completed")
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div id="Standings" class="panel panel-default panel-borderless">
+                    <div class="panel-heading">
+                        <h2 class="panel-title"><span>Admin Panel</span></h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="panel-text">
+                            You signed up for it... fill out all the information below and finalize the round.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="row wt-admin-container" style="text-align:center;">
+            <div class="col-md-3">
+                <a class="wt-admin wt-admin-scores" href="/match/{{ $match->id }}/addscores">Add Scores</a>
+                    <span>First add the round's scores for each golfer</span>
+            </div>
+            <div class="col-md-3">
+                <a id="btn-add" name="btn-add" class="wt-admin wt-admin-achievement" href="/match/{{ $match->id }}/addscores">Add Achievement</a>
+                    <span>Next add any achievements that were earned</span>
+            </div>
+            <div class="col-md-3">
+                <a id="btn-match" name="btn-match" class="wt-admin wt-admin-points" href="/match/{{ $match->id }}/addscores">Assign Match Points</a>
+                    <span>Then assign the winners for the round</span>
+            </div>
+            <div class="col-md-3">
+                <a class="wt-admin wt-admin-finalize" href="/match/{{ $match->id }}/finalize">Finalize Round</a>
+                    <span>Finally, close out the round</span>
+            </div>
+        </div>                       
+    @endif
 
+    @if($match->status == "completed" && count($winners) > 0)
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div id="Standings" class="panel panel-default panel-borderless">
+                    <div class="panel-heading">
+                        <h2 class="panel-title"><span>Match Winners</span></h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="panel-text">
+                            Factoring in match points and achievement points... here are your champions!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        @foreach($winners as $winner)
+        <div class="col-md-4">
+            <div class="panel-body standings-holder">
+                <figure class="standings-photo">
+                    <img src="{{ $winner->player->image }}" alt="standings image" style="display:block;" />
+                    <div class="score-total">
+                        <span>{{ $winner->match_points_earned + $winner->achievement_points_earned }}</span>
+                    </div>
+                    <figcaption class="standings-description">
+                        <h3 class="standings-name">{{ $winner->player->firstName }} {{ $winner->player->lastName }}</h3>
+                        <div class="standings-points">
+                            <span>Match: {{ $winner->match_points_earned }}</span>
+                            <span>Achievement: {{ $winner->achievement_points_earned }}</span>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+        @endforeach
+        </div>
+    @endif
+
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div id="Standings" class="panel panel-default panel-borderless">
+                <div class="panel-heading">
+                    <h2 class="panel-title"><span>Match Scores</span></h2>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default panel-borderless">
-                    @if(Auth::id() == $league->ownerID)
-                        <!-- ADD LINKS HERE -->
-                        <a class="btn btn-primary btn-xs" href="/match/{{ $match->id }}/addscores">Add Scores</a>
-                        <a class="btn btn-primary btn-xs" href="/match/{{ $match->id }}/finalize">Finalize Round</a>
-                        <button id="btn-add" name="btn-add" class="btn btn-primary btn-xs">Add Achievement</button>
-                        <button id="btn-match" name="btn-match" class="btn btn-primary btn-xs">Assign Match Points</button>                       
-                    @endif
 
                     @if($holes)
                         <div class="table-responsive">

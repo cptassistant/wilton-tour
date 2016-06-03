@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('hero-bg')
-<div id="hero" class="hero-small" data-type="background" data-speed="10">
+<div id="hero" class="hero-half" data-type="background" data-speed="10">
     <div class="overlay">
         <div class="container hero-holder">
             <div class="row hero-wrapper">
                 <div class="col-md-8 col-md-offset-2">
+                    <div class="hero-top">
+                        <span>{{ $league->tagline }}</span>
+                    </div>
                     <div class="hero-header">
                         <h1 id="league-title">{{ $league->name }}</h1>
                     </div>

@@ -34,7 +34,8 @@ jQuery(function($) {
 	    });
 	});
 
-	$('#btn-match').click(function(){		
+	$('#btn-match').click(function(e){	
+        e.preventDefault(); 	
         $('#frmAssignPoints').trigger("reset");
         $('#mpModal').modal('show');
 	});
@@ -76,7 +77,8 @@ jQuery(function($) {
     });
 
 	//display modal form for adding achievement
-    $('#btn-add').click(function(){
+    $('#btn-add').click(function(e){
+        e.preventDefault(); 
         $('#btn-save').val("add");
         $('#frmTasks').trigger("reset");
         $('#myModal').modal('show');

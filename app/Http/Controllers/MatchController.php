@@ -146,8 +146,19 @@ class MatchController extends Controller
     	// Get achievements for the round
 
     	// Get winners for the round
+        if($match->status == "completed")
+        {
+            $winners = MatchStat::
+                with('player')->
+                where('match_id', $match->id)->
+                where(function ($query) {
+                    $query->where('match_points_earned', '>', 0)->
+                            orWhere('achievement_points_earned', '>', 0);
+                })
+                ->orderBy('match_points_earned', 'desc')->get();
+        }
 
-    	return view('match.show', compact('match', 'league', 'players', 'holes', 'totalYards', 'totalPar'));
+    	return view('match.show', compact('match', 'league', 'players', 'holes', 'totalYards', 'totalPar', 'winners'));
     }
 
     public function addScores(Match $match)

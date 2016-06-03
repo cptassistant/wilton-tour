@@ -15,4 +15,9 @@ class Player extends Model
     {
         return $this->hasMany('App\MatchWinner');
     }
+
+    public function matchStats()
+    {
+    	return $this->hasMany('App\Player');
+    }
 }

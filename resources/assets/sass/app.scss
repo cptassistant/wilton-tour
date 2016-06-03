@@ -608,3 +608,35 @@ td a:hover {
 .text-left {
 	text-align:left !important;
 }
+
+.wt-admin {
+	padding-top: 200px;
+    display: block;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.wt-admin-scores {
+    background: url(../images/match-add-scores.jpg) center top no-repeat;
+}
+
+.wt-admin-achievement {
+    background: url(../images/match-add-achievements.jpg) center top no-repeat;
+}
+
+.wt-admin-points {
+    background: url(../images/match-add-match-points.jpg) center top no-repeat;
+}
+
+.wt-admin-finalize {
+    background: url(../images/match-finalize.jpg) center top no-repeat;
+}
+
+.wt-admin-container span {
+	color:#BBB;
+	font-weight:normal;
+	display:block;
+	font-size:14px;
+	margin-bottom:40px;
+}
